@@ -13,6 +13,8 @@ mainConfig =
         allocationGranularity: 'block'
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
+        maxThreadBlockSize: 512
+
     '1.1':
         version: '1.1'
         threadsPerWarp: 32
@@ -27,6 +29,7 @@ mainConfig =
         allocationGranularity: 'block'
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
+        maxThreadBlockSize: 512
 
     '1.2':
         version: '1.2'
@@ -42,6 +45,8 @@ mainConfig =
         allocationGranularity: 'block'
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
+        maxThreadBlockSize: 512
+
     '1.3':
         version: '1.3'
         threadsPerWarp: 32
@@ -56,6 +61,7 @@ mainConfig =
         allocationGranularity: 'block'
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
+        maxThreadBlockSize: 512
 
     '2.0':
         version: '2.0'
@@ -70,6 +76,56 @@ mainConfig =
 
         allocationGranularity: 'warp'
         sharedMemoryAllocationUnitSize: 128
+        warpAllocationGranularity: 2
+        maxThreadBlockSize: 512
+
+    '2.1':
+        version: '2.1'
+        threadsPerWarp: 32
+        warpsPerMultiprocessor: 48
+        threadsPerMultiprocessor: 1536
+        threadBlocksPerMultiprocessor: 8
+        sharedMemoryPerMultiprocessor: 49152
+
+        registerFileSize: 32768
+        registerAllocationUnitSize: 64
+
+        allocationGranularity: 'warp'
+        sharedMemoryAllocationUnitSize: 128
+        warpAllocationGranularity: 2
+        maxThreadBlockSize: 512
+
+    '3.0':
+        version: '3.0'
+        threadsPerWarp: 32
+        warpsPerMultiprocessor: 64
+        threadsPerMultiprocessor: 2048
+        threadBlocksPerMultiprocessor: 16
+        sharedMemoryPerMultiprocessor: 49152
+
+        registerFileSize: 65536
+        registerAllocationUnitSize: 256
+
+        allocationGranularity: 'warp'
+        sharedMemoryAllocationUnitSize: 256
+        warpAllocationGranularity: 4
+        maxThreadBlockSize: 512
+
+    '3.5':
+        version: '3.5'
+        threadsPerWarp: 32
+        warpsPerMultiprocessor: 64
+        threadsPerMultiprocessor: 2048
+        threadBlocksPerMultiprocessor: 16
+        sharedMemoryPerMultiprocessor: 49152
+
+        registerFileSize: 65536
+        registerAllocationUnitSize: 256
+
+        allocationGranularity: 'warp'
+        sharedMemoryAllocationUnitSize: 256
+        warpAllocationGranularity: 4
+        maxThreadBlockSize: 512
 
 
 
