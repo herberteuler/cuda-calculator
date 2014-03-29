@@ -38,10 +38,10 @@ $('form').on('submit', function(e){
 
     });
 
-    // $o.find('svg').remove();
-    // var f = $o.find('figure')
-    // drawGraph(gds[0], f[0]);
-    // drawGraph(gds[1], f[1]);
-    // drawGraph(gds[2], f[2]);
+     $o.find('svg').remove();
+     var f = $o.find('figure')
+     drawGraph(gds[0], f[0]);
+     drawGraph(gds[1], f[1]);
+     drawGraph(gds[2], f[2]);
 
 })
