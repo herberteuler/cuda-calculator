@@ -82,7 +82,7 @@ mainConfig =
         maxRegistersPerThread: 63
         sharedMemoryAllocationUnitSize: 128
         warpAllocationGranularity: 2
-        maxThreadBlockSize: 512
+        maxThreadBlockSize: 1024
 
     '2.1':
         version: '2.1'
@@ -99,7 +99,7 @@ mainConfig =
         maxRegistersPerThread: 63
         sharedMemoryAllocationUnitSize: 128
         warpAllocationGranularity: 2
-        maxThreadBlockSize: 512
+        maxThreadBlockSize: 1024
 
     '3.0':
         version: '3.0'
@@ -116,7 +116,7 @@ mainConfig =
         maxRegistersPerThread: 63
         sharedMemoryAllocationUnitSize: 256
         warpAllocationGranularity: 4
-        maxThreadBlockSize: 512
+        maxThreadBlockSize: 1024
 
     '3.5':
         version: '3.5'
@@ -133,7 +133,7 @@ mainConfig =
         maxRegistersPerThread: 255
         sharedMemoryAllocationUnitSize: 256
         warpAllocationGranularity: 4
-        maxThreadBlockSize: 512
+        maxThreadBlockSize: 1024
 
 
 
@@ -185,7 +185,7 @@ window.calculate = (input) ->
         Math.min(config.threadBlocksPerMultiprocessor, Math.floor(config.warpsPerMultiprocessor / blockWarps()))
 
     threadBlocksPerMultiprocessorLimitedByRegistersPerMultiprocessor = () ->
-        if input.registersPerThread >= config.maxRegistersPerThread
+        if input.registersPerThread > config.maxRegistersPerThread
             0
         else
             if input.registersPerThread > 0
@@ -238,6 +238,9 @@ window.calculate = (input) ->
     return output
 
 window.calculateGraphs = (input) ->
+
+    config = mainConfig[input.version]
+
     graphWarpOccupancyOfThreadsPerBlock = () ->
 
         current =
@@ -246,7 +249,7 @@ window.calculateGraphs = (input) ->
 
         inp = _.clone input
         r = []
-        for threadsPerBlock in [16..512] by 16
+        for threadsPerBlock in [32..config.maxThreadBlockSize] by 32
             inp.threadsPerBlock = threadsPerBlock
 
             r.push({
@@ -267,7 +270,7 @@ window.calculateGraphs = (input) ->
 
         inp = _.clone input
         r = []
-        for registersPerThread in [1..128]
+        for registersPerThread in [1..config.maxRegistersPerThread]
             inp.registersPerThread = registersPerThread
 
             r.push({
@@ -290,7 +293,7 @@ window.calculateGraphs = (input) ->
 
         inp = _.clone input
         r = []
-        for sharedMemoryPerBlock in [512..512*100] by 512
+        for sharedMemoryPerBlock in [0..config.sharedMemoryPerMultiprocessor] by 512
             inp.sharedMemoryPerBlock = sharedMemoryPerBlock
 
             r.push({

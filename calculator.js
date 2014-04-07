@@ -75,7 +75,7 @@
       maxRegistersPerThread: 63,
       sharedMemoryAllocationUnitSize: 128,
       warpAllocationGranularity: 2,
-      maxThreadBlockSize: 512
+      maxThreadBlockSize: 1024
     },
     '2.1': {
       version: '2.1',
@@ -90,7 +90,7 @@
       maxRegistersPerThread: 63,
       sharedMemoryAllocationUnitSize: 128,
       warpAllocationGranularity: 2,
-      maxThreadBlockSize: 512
+      maxThreadBlockSize: 1024
     },
     '3.0': {
       version: '3.0',
@@ -105,7 +105,7 @@
       maxRegistersPerThread: 63,
       sharedMemoryAllocationUnitSize: 256,
       warpAllocationGranularity: 4,
-      maxThreadBlockSize: 512
+      maxThreadBlockSize: 1024
     },
     '3.5': {
       version: '3.5',
@@ -120,7 +120,7 @@
       maxRegistersPerThread: 255,
       sharedMemoryAllocationUnitSize: 256,
       warpAllocationGranularity: 4,
-      maxThreadBlockSize: 512
+      maxThreadBlockSize: 1024
     }
   };
 
@@ -171,7 +171,7 @@
       return Math.min(config.threadBlocksPerMultiprocessor, Math.floor(config.warpsPerMultiprocessor / blockWarps()));
     };
     threadBlocksPerMultiprocessorLimitedByRegistersPerMultiprocessor = function() {
-      if (input.registersPerThread >= config.maxRegistersPerThread) {
+      if (input.registersPerThread > config.maxRegistersPerThread) {
         return 0;
       } else {
         if (input.registersPerThread > 0) {
@@ -217,16 +217,17 @@
   };
 
   window.calculateGraphs = function(input) {
-    var graphWarpOccupancyOfRegistersPerThread, graphWarpOccupancyOfSharedMemoryPerBlock, graphWarpOccupancyOfThreadsPerBlock, output;
+    var config, graphWarpOccupancyOfRegistersPerThread, graphWarpOccupancyOfSharedMemoryPerBlock, graphWarpOccupancyOfThreadsPerBlock, output;
+    config = mainConfig[input.version];
     graphWarpOccupancyOfThreadsPerBlock = function() {
-      var current, inp, r, threadsPerBlock;
+      var current, inp, r, threadsPerBlock, _ref;
       current = {
         threadsPerBlock: input.threadsPerBlock,
         activeWarpsPerMultiprocessor: window.calculate(input).activeWarpsPerMultiprocessor
       };
       inp = _.clone(input);
       r = [];
-      for (threadsPerBlock = 16; threadsPerBlock <= 512; threadsPerBlock += 16) {
+      for (threadsPerBlock = 32, _ref = config.maxThreadBlockSize; threadsPerBlock <= _ref; threadsPerBlock += 32) {
         inp.threadsPerBlock = threadsPerBlock;
         r.push({
           threadsPerBlock: threadsPerBlock,
@@ -239,14 +240,14 @@
       };
     };
     graphWarpOccupancyOfRegistersPerThread = function() {
-      var current, inp, r, registersPerThread;
+      var current, inp, r, registersPerThread, _ref;
       current = {
         registersPerThread: input.registersPerThread,
         activeWarpsPerMultiprocessor: window.calculate(input).activeWarpsPerMultiprocessor
       };
       inp = _.clone(input);
       r = [];
-      for (registersPerThread = 1; registersPerThread <= 128; registersPerThread++) {
+      for (registersPerThread = 1, _ref = config.maxRegistersPerThread; 1 <= _ref ? registersPerThread <= _ref : registersPerThread >= _ref; 1 <= _ref ? registersPerThread++ : registersPerThread--) {
         inp.registersPerThread = registersPerThread;
         r.push({
           registersPerThread: registersPerThread,
@@ -266,7 +267,7 @@
       };
       inp = _.clone(input);
       r = [];
-      for (sharedMemoryPerBlock = 512, _ref = 512 * 100; sharedMemoryPerBlock <= _ref; sharedMemoryPerBlock += 512) {
+      for (sharedMemoryPerBlock = 0, _ref = config.sharedMemoryPerMultiprocessor; sharedMemoryPerBlock <= _ref; sharedMemoryPerBlock += 512) {
         inp.sharedMemoryPerBlock = sharedMemoryPerBlock;
         r.push({
           sharedMemoryPerBlock: sharedMemoryPerBlock,
