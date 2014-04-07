@@ -258,6 +258,7 @@ window.calculateGraphs = (input) ->
             })
 
         return {
+            xlabel: "Threads Per Block"
             data: r
             current: current
         }
@@ -279,6 +280,7 @@ window.calculateGraphs = (input) ->
             })
 
         return {
+            xlabel: "Registers Per Thread"
             data: r
             current: current
         }
@@ -302,6 +304,7 @@ window.calculateGraphs = (input) ->
             })
 
         return {
+            xlabel: "Shared Memory Per Block"
             data: r
             current: current
         }

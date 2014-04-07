@@ -132,22 +132,33 @@ drawGraph1 = function(input, to){
 			      .attr("transform", "translate(0," + h + ")")
 			      .call(xAxis);
 
-			//add x axis albel.
-			/*graph.append("text")
-				.attr("class", "x label")
-				.attr("text-anchor", "end")
-				.attr("x", w)
-				.attr("y", h - 6)
-				.text("Threads per Block");*/
-
 			// create left yAxis
-			var yAxisLeft = d3.svg.axis().scale(y).tickSize(-w-20).tickSubdivide(true).ticks(4).orient("left"); //d3.svg.axis().scale(y).ticks(4).orient("right");
+			var yAxisLeft = d3.svg.axis().scale(y).tickSize(-w-20).tickSubdivide(true).ticks(4).orient("left"); 
 			// Add the y-axis to the left
 			graph.append("svg:g")
 			      .attr("class", "y axis")
 			      .attr("transform", "translate(-25,0)")
 			      .call(yAxisLeft);
-			
+
+			//add x axis albel.
+			graph.append("text")
+				.attr("class", "x label")
+				.attr("text-anchor", "end")
+				.attr("x", w)
+				.attr("y", h - 6)
+				.text(input.xlabel);
+				//.text("Threads per Block");
+			//*/
+
+			graph.append("text")
+				.attr("class", "y label")
+				.attr("text-anchor", "end")
+				.attr("y", 6)
+				.attr("dy", ".75em")
+				.attr("transform", "rotate(-90)")
+				.attr("transform", "translate(-25,0)")
+				.text("# warps");
+
   			// Add the line by appending an svg:path element with the data line we created above
 			// do this AFTER the axes above so that the line is above the tick-lines
   			graph.append("svg:path").attr("d", line(data));

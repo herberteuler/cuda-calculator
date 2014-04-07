@@ -235,6 +235,7 @@
         });
       }
       return {
+        xlabel: "Threads Per Block",
         data: r,
         current: current
       };
@@ -255,6 +256,7 @@
         });
       }
       return {
+        xlabel: "Registers Per Thread",
         data: r,
         current: current
       };
@@ -275,6 +277,7 @@
         });
       }
       return {
+        xlabel: "Shared Memory Per Block",
         data: r,
         current: current
       };

@@ -33,6 +33,7 @@ $('form').on('submit', function(e){
                 value: vs[1]
             }
         });
+	gd.xlabel = v.xlabel;
 
         return gd;
 
