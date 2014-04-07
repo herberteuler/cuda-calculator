@@ -1,5 +1,5 @@
 (function() {
-  var ceil, gcd, lcm, mainConfig;
+  var ceil, floor, gcd, lcm, mainConfig;
 
   mainConfig = {
     '1.0': {
@@ -12,6 +12,7 @@
       registerFileSize: 8192,
       registerAllocationUnitSize: 256,
       allocationGranularity: 'block',
+      maxRegistersPerThread: 124,
       sharedMemoryAllocationUnitSize: 512,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 512
@@ -26,6 +27,7 @@
       registerFileSize: 8192,
       registerAllocationUnitSize: 256,
       allocationGranularity: 'block',
+      maxRegistersPerThread: 124,
       sharedMemoryAllocationUnitSize: 512,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 512
@@ -40,6 +42,7 @@
       registerFileSize: 16384,
       registerAllocationUnitSize: 512,
       allocationGranularity: 'block',
+      maxRegistersPerThread: 124,
       sharedMemoryAllocationUnitSize: 512,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 512
@@ -54,6 +57,7 @@
       registerFileSize: 16384,
       registerAllocationUnitSize: 512,
       allocationGranularity: 'block',
+      maxRegistersPerThread: 124,
       sharedMemoryAllocationUnitSize: 512,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 512
@@ -68,6 +72,7 @@
       registerFileSize: 32768,
       registerAllocationUnitSize: 64,
       allocationGranularity: 'warp',
+      maxRegistersPerThread: 63,
       sharedMemoryAllocationUnitSize: 128,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 512
@@ -82,6 +87,7 @@
       registerFileSize: 32768,
       registerAllocationUnitSize: 64,
       allocationGranularity: 'warp',
+      maxRegistersPerThread: 63,
       sharedMemoryAllocationUnitSize: 128,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 512
@@ -96,6 +102,7 @@
       registerFileSize: 65536,
       registerAllocationUnitSize: 256,
       allocationGranularity: 'warp',
+      maxRegistersPerThread: 63,
       sharedMemoryAllocationUnitSize: 256,
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 512
@@ -110,6 +117,7 @@
       registerFileSize: 65536,
       registerAllocationUnitSize: 256,
       allocationGranularity: 'warp',
+      maxRegistersPerThread: 255,
       sharedMemoryAllocationUnitSize: 256,
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 512
@@ -132,8 +140,12 @@
     return Math.ceil(a / b) * b;
   };
 
+  floor = function(a, b) {
+    return Math.floor(a / b) * b;
+  };
+
   window.calculate = function(input) {
-    var activeThreadBlocksPerMultiprocessor, activeThreadsPerMultiprocessor, activeWarpsPerMultiprocessor, blockRegisters, blockSharedMemory, blockWarps, config, occupancyOfMultiprocessor, output, threadBlocksPerMultiprocessorLimitedByRegistersPerMultiprocessor, threadBlocksPerMultiprocessorLimitedBySharedMemoryPerMultiprocessor, threadBlocksPerMultiprocessorLimitedByWarpsOrBlocksPerMultiprocessor;
+    var activeThreadBlocksPerMultiprocessor, activeThreadsPerMultiprocessor, activeWarpsPerMultiprocessor, blockRegisters, blockSharedMemory, blockWarps, config, multiprocessorRegisters, occupancyOfMultiprocessor, output, threadBlocksPerMultiprocessorLimitedByRegistersPerMultiprocessor, threadBlocksPerMultiprocessorLimitedBySharedMemoryPerMultiprocessor, threadBlocksPerMultiprocessorLimitedByWarpsOrBlocksPerMultiprocessor;
     config = mainConfig[input.version];
     blockWarps = function() {
       return Math.ceil(input.threadsPerBlock / config.threadsPerWarp);
@@ -142,7 +154,14 @@
       if (config.allocationGranularity === 'block') {
         return ceil(ceil(blockWarps(), config.warpAllocationGranularity) * input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize);
       } else {
-        return ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize) * blockWarps();
+        return blockWarps();
+      }
+    };
+    multiprocessorRegisters = function() {
+      if (config.allocationGranularity === 'block') {
+        return config.registerFileSize;
+      } else {
+        return floor(config.registerFileSize / ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity);
       }
     };
     blockSharedMemory = function() {
@@ -152,10 +171,14 @@
       return Math.min(config.threadBlocksPerMultiprocessor, Math.floor(config.warpsPerMultiprocessor / blockWarps()));
     };
     threadBlocksPerMultiprocessorLimitedByRegistersPerMultiprocessor = function() {
-      if (input.registersPerThread > 0) {
-        return Math.floor(config.registerFileSize / blockRegisters());
+      if (input.registersPerThread >= config.maxRegistersPerThread) {
+        return 0;
       } else {
-        return config.threadBlocksPerMultiprocessor;
+        if (input.registersPerThread > 0) {
+          return Math.floor(multiprocessorRegisters() / blockRegisters());
+        } else {
+          return config.threadBlocksPerMultiprocessor;
+        }
       }
     };
     threadBlocksPerMultiprocessorLimitedBySharedMemoryPerMultiprocessor = function() {

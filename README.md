@@ -6,6 +6,13 @@ Usage:
 ------
 Online here http://lxkarthi.github.io/cuda-calculator/
 
+Changes:
+--------
+- Extended till Compute 3.5
+- limitBlocksDuetoRegs updated as per CUDA_Occupancy_calculator.xls(7-Apr-2014) (zero conditions)
+   (xls file has bug in calculating no of registers per multiprocessor, per block if allocation granularity=="warp")
+- TODO Graph change & plot
+
 Credits:
 --------
 

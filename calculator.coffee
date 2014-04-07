@@ -11,6 +11,7 @@ mainConfig =
         registerAllocationUnitSize: 256
 
         allocationGranularity: 'block'
+        maxRegistersPerThread: 124
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
         maxThreadBlockSize: 512
@@ -27,6 +28,7 @@ mainConfig =
         registerAllocationUnitSize: 256
 
         allocationGranularity: 'block'
+        maxRegistersPerThread: 124
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
         maxThreadBlockSize: 512
@@ -43,6 +45,7 @@ mainConfig =
         registerAllocationUnitSize: 512
 
         allocationGranularity: 'block'
+        maxRegistersPerThread: 124
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
         maxThreadBlockSize: 512
@@ -59,6 +62,7 @@ mainConfig =
         registerAllocationUnitSize: 512
 
         allocationGranularity: 'block'
+        maxRegistersPerThread: 124
         sharedMemoryAllocationUnitSize: 512
         warpAllocationGranularity: 2
         maxThreadBlockSize: 512
@@ -75,6 +79,7 @@ mainConfig =
         registerAllocationUnitSize: 64
 
         allocationGranularity: 'warp'
+        maxRegistersPerThread: 63
         sharedMemoryAllocationUnitSize: 128
         warpAllocationGranularity: 2
         maxThreadBlockSize: 512
@@ -91,6 +96,7 @@ mainConfig =
         registerAllocationUnitSize: 64
 
         allocationGranularity: 'warp'
+        maxRegistersPerThread: 63
         sharedMemoryAllocationUnitSize: 128
         warpAllocationGranularity: 2
         maxThreadBlockSize: 512
@@ -107,6 +113,7 @@ mainConfig =
         registerAllocationUnitSize: 256
 
         allocationGranularity: 'warp'
+        maxRegistersPerThread: 63
         sharedMemoryAllocationUnitSize: 256
         warpAllocationGranularity: 4
         maxThreadBlockSize: 512
@@ -123,6 +130,7 @@ mainConfig =
         registerAllocationUnitSize: 256
 
         allocationGranularity: 'warp'
+        maxRegistersPerThread: 255
         sharedMemoryAllocationUnitSize: 256
         warpAllocationGranularity: 4
         maxThreadBlockSize: 512
@@ -142,6 +150,9 @@ lcm = (a,b) ->
 ceil = (a,b) ->
     return Math.ceil(a / b) * b
 
+floor = (a,b) ->
+    return Math.floor(a / b) * b
+
 
 window.calculate = (input) ->
 
@@ -155,8 +166,17 @@ window.calculate = (input) ->
             ceil( ceil( blockWarps(), config.warpAllocationGranularity ) * input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize )
             # debugger
         else
-            ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize) * blockWarps()
+            #Correct value is commented, xls value is given (no of warps per block)
+            #ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize) * blockWarps()
+            blockWarps()
 
+    multiprocessorRegisters = () ->
+        if config.allocationGranularity == 'block'
+            config.registerFileSize
+        else
+            #Correct value is commented, xls value is given (no of warps per Multiprocessor)
+            #floor( config.registerFileSize/ ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity ) * ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize)
+            floor( config.registerFileSize/ ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity )
 
     blockSharedMemory = () ->
         ceil(input.sharedMemoryPerBlock, config.sharedMemoryAllocationUnitSize)
@@ -165,10 +185,14 @@ window.calculate = (input) ->
         Math.min(config.threadBlocksPerMultiprocessor, Math.floor(config.warpsPerMultiprocessor / blockWarps()))
 
     threadBlocksPerMultiprocessorLimitedByRegistersPerMultiprocessor = () ->
-        if input.registersPerThread > 0
-            Math.floor(config.registerFileSize / blockRegisters())
+        if input.registersPerThread >= config.maxRegistersPerThread
+            0
         else
-            config.threadBlocksPerMultiprocessor
+            if input.registersPerThread > 0
+                #Math.floor( config.registerFileSize  / blockRegisters())
+                Math.floor(multiprocessorRegisters() / blockRegisters())
+            else
+                config.threadBlocksPerMultiprocessor
 
     threadBlocksPerMultiprocessorLimitedBySharedMemoryPerMultiprocessor = () ->
         if input.sharedMemoryPerBlock > 0
