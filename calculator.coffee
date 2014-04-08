@@ -166,17 +166,17 @@ window.calculate = (input) ->
             ceil( ceil( blockWarps(), config.warpAllocationGranularity ) * input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize )
             # debugger
         else
-            #Correct value is commented, xls value is given (no of warps per block)
-            #ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize) * blockWarps()
-            blockWarps()
+            #Correct value is given, xls value is commented (no of warps per block)
+            ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize) * blockWarps()
+            #blockWarps()
 
     multiprocessorRegisters = () ->
         if config.allocationGranularity == 'block'
             config.registerFileSize
         else
-            #Correct value is commented, xls value is given (no of warps per Multiprocessor)
-            #floor( config.registerFileSize/ ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity ) * ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize)
-            floor( config.registerFileSize/ ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity )
+            #Correct value is given, xls value is commented (no of warps per Multiprocessor)
+            floor( config.registerFileSize/ ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity ) * ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize)
+            #floor( config.registerFileSize/ ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity )
 
     blockSharedMemory = () ->
         ceil(input.sharedMemoryPerBlock, config.sharedMemoryAllocationUnitSize)

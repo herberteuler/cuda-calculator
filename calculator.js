@@ -154,14 +154,14 @@
       if (config.allocationGranularity === 'block') {
         return ceil(ceil(blockWarps(), config.warpAllocationGranularity) * input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize);
       } else {
-        return blockWarps();
+        return ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize) * blockWarps();
       }
     };
     multiprocessorRegisters = function() {
       if (config.allocationGranularity === 'block') {
         return config.registerFileSize;
       } else {
-        return floor(config.registerFileSize / ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity);
+        return floor(config.registerFileSize / ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize), config.warpAllocationGranularity) * ceil(input.registersPerThread * config.threadsPerWarp, config.registerAllocationUnitSize);
       }
     };
     blockSharedMemory = function() {

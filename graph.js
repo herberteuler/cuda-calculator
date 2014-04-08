@@ -152,7 +152,7 @@ drawGraph1 = function(input, to){
 
 			graph.append("text")
 				.attr("class", "y label")
-				.attr("text-anchor", "end")
+			//	.attr("text-anchor", "end")
 				.attr("y", 6)
 				.attr("dy", ".75em")
 				.attr("transform", "rotate(-90)")
@@ -162,5 +162,14 @@ drawGraph1 = function(input, to){
   			// Add the line by appending an svg:path element with the data line we created above
 			// do this AFTER the axes above so that the line is above the tick-lines
   			graph.append("svg:path").attr("d", line(data));
+
+  graph.selectAll(".current")
+  .data([current])
+  .enter()
+  .append("circle")
+  .attr("class", "current")
+  .attr("cx", function(d) { return x(d.key); })
+  .attr('r', 3)
+  .attr("cy", function(d) { return y(d.value); })
 
 }
