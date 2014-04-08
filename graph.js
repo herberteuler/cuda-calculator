@@ -147,7 +147,6 @@ drawGraph1 = function(input, to){
 				.attr("x", w)
 				.attr("y", h - 6)
 				.text(input.xlabel);
-				//.text("Threads per Block");
 			//*/
 
 			graph.append("text")
@@ -159,17 +158,30 @@ drawGraph1 = function(input, to){
 				.attr("transform", "translate(-25,0)")
 				.text("# warps");
 
+			//Draw all the points
+			graph.selectAll(".bar")
+			.data(data)
+			.enter()
+			.append("circle")
+			.attr("class", "bar")
+			.attr("cx", function(d) { return x(d.key); })
+			// .attr("dx", x.rangeBand())
+			.attr('r', 2)
+			// .attr('dy', 10)
+			.attr("cy", function(d) { return y(d.value); })
+
   			// Add the line by appending an svg:path element with the data line we created above
 			// do this AFTER the axes above so that the line is above the tick-lines
   			graph.append("svg:path").attr("d", line(data));
 
-  graph.selectAll(".current")
-  .data([current])
-  .enter()
-  .append("circle")
-  .attr("class", "current")
-  .attr("cx", function(d) { return x(d.key); })
-  .attr('r', 3)
-  .attr("cy", function(d) { return y(d.value); })
+			//Draw the current configuration point in red
+			graph.selectAll(".current")
+			.data([current])
+			.enter()
+			.append("circle")
+			.attr("class", "current")
+			.attr("cx", function(d) { return x(d.key); })
+			.attr('r', 3)
+			.attr("cy", function(d) { return y(d.value); })
 
 }
