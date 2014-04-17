@@ -91,6 +91,7 @@ drawGraph1 = function(input, to){
 		var yData = _.pluck(data, 'value')
 		//var data = [3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 2, 7];
 		var current = input.current;
+		console.log('xData(' + input.xlabel +') vs yData(#warps)' );
 		console.log('xData:' + xData );
 		console.log('yData:' + yData );
 
