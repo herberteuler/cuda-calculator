@@ -135,6 +135,142 @@ mainConfig =
         warpAllocationGranularity: 4
         maxThreadBlockSize: 1024
 
+    '3.7':
+      version: '3.7'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 16
+      sharedMemoryPerMultiprocessor: 114688
+
+      registerFileSize: 131072
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
+    '5.0':
+      version: '5.0'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 65536
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
+    '5.2':
+      version: '5.2'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 98304
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
+    '5.3':
+      version: '5.3'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 65536
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
+    '6.0':
+      version: '6.0'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 65536
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 2
+      maxThreadBlockSize: 1024
+
+    '6.1':
+      version: '6.1'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 98304
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
+    '6.2':
+      version: '6.2'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 65536
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
+    '7.0':
+      version: '7.0'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 64
+      threadsPerMultiprocessor: 2048
+      threadBlocksPerMultiprocessor: 32
+      sharedMemoryPerMultiprocessor: 98304
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 4
+      maxThreadBlockSize: 1024
+
 
 
 gcd = (a,b) ->
@@ -313,4 +449,3 @@ window.calculateGraphs = (input) ->
         graphWarpOccupancyOfThreadsPerBlock: graphWarpOccupancyOfThreadsPerBlock()
         graphWarpOccupancyOfRegistersPerThread: graphWarpOccupancyOfRegistersPerThread()
         graphWarpOccupancyOfSharedMemoryPerBlock: graphWarpOccupancyOfSharedMemoryPerBlock()
-

@@ -1,22 +1,22 @@
-HTML/JS port of CUDA Occupancy Calculator
------------------------------------------
-http://developer.download.nvidia.com/compute/cuda/CUDA_Occupancy_calculator.xls
+# Online CUDA Occupancy Calculator
 
-Usage:
-------
-Online here http://lxkarthi.github.io/cuda-calculator/
+https://xmartlabs.github.io/cuda-calculator
 
-Changes:
---------
-- Extended till Compute 3.5
-- limitBlocksDuetoRegs updated as per CUDA_Occupancy_calculator.xls(7-Apr-2014) (zero conditions)
-   (xls file has bug in calculating no of registers per multiprocessor, per block if allocation granularity=="warp")
-- TODO Graph change & plot
+Port of the [CUDA Occupancy Calculator spreadsheet](https://developer.download.nvidia.com/compute/cuda/CUDA_Occupancy_calculator.xls).
 
-Credits:
---------
+## Changes from upstream
 
+* Extended until Compute Capabilities 7.0
+
+## Compilation
+
+```shell
+coffee -c calculator.coffee
+```
+
+## Credits
+
+* [Xmartlabs](https://xmartlabs.github.io/cuda-calculator)
 * [Karthikeyan](https://github.com/lxkarthi/cuda-calculator) - Improved cuda-calculator online version.
-* [Aliaksei](http://github.com/roadhump) - Original Author deleted it. :(
 * [Mihai Maruseac](https://github.com/mihaimaruseac/cuda-calculator) - Thanks for the fork.
-
+* [Aliaksei](http://github.com/roadhump) - Original Author deleted it. :(
