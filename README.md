@@ -19,4 +19,4 @@ coffee -c calculator.coffee
 * [Xmartlabs](https://xmartlabs.github.io/cuda-calculator)
 * [Karthikeyan](https://github.com/lxkarthi/cuda-calculator) - Improved cuda-calculator online version.
 * [Mihai Maruseac](https://github.com/mihaimaruseac/cuda-calculator) - Thanks for the fork.
-* [Aliaksei](http://github.com/roadhump) - Original Author deleted it. :(
+* [Aliaksei](https://github.com/roadhump) - Original Author deleted it. :(
