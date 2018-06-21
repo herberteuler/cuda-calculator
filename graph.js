@@ -78,13 +78,13 @@ drawGraph = function(input, to){
 }
 
 drawGraph1 = function(input, to){
-		/* implementation heavily influenced by http://bl.ocks.org/1166403 */
-		
+		/* implementation heavily influenced by https://bl.ocks.org/1166403 */
+
 		// define dimensions of graph
 		var m = [80, 80, 80, 80]; // margins
 		var w = 1000 - m[1] - m[3]; // width
 		var h = 400 - m[0] - m[2]; // height
-		
+
 		// create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
 		var data = input.data;
 		var xData = _.pluck(data, 'key')
@@ -105,17 +105,17 @@ drawGraph1 = function(input, to){
 		// create a line function that can convert data[] into x and y points
 		var line = d3.svg.line()
 			// assign the X function to plot our line as we wish
-			.x(function(d) { 
+			.x(function(d) {
 				// verbose logging to show what's actually being done
 				//console.log('Plotting X value for data point: ' + d.key + ' to be at: ' + x(d.key) + ' using our xScale.');
 				// return the X coordinate where we want to plot this datapoint
-				return x(d.key); //d.key); 
+				return x(d.key); //d.key);
 			})
-			.y(function(d) { 
+			.y(function(d) {
 				// verbose logging to show what's actually being done
 				//console.log('Plotting Y value for data point: ' + d.value + ' to be at: ' + y(d.value) + " using our yScale.");
 				// return the Y coordinate where we want to plot this datapoint
-				return y(d.value); 
+				return y(d.value);
 			})
 
 			// Add an SVG element with the desired dimensions and margin.
@@ -134,7 +134,7 @@ drawGraph1 = function(input, to){
 			      .call(xAxis);
 
 			// create left yAxis
-			var yAxisLeft = d3.svg.axis().scale(y).tickSize(-w-20).tickSubdivide(true).ticks(4).orient("left"); 
+			var yAxisLeft = d3.svg.axis().scale(y).tickSize(-w-20).tickSubdivide(true).ticks(4).orient("left");
 			// Add the y-axis to the left
 			graph.append("svg:g")
 			      .attr("class", "y axis")
