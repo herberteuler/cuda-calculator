@@ -123,6 +123,8 @@
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 1024
     },
+<<<<<<< HEAD
+=======
     '3.7': {
       version: '3.7',
       threadsPerWarp: 32,
@@ -138,6 +140,7 @@
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 1024
     },
+>>>>>>> pr/2
     '5.0': {
       version: '5.0',
       threadsPerWarp: 32,
@@ -168,6 +171,8 @@
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 1024
     },
+<<<<<<< HEAD
+=======
     '5.3': {
       version: '5.3',
       threadsPerWarp: 32,
@@ -183,6 +188,7 @@
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 1024
     },
+>>>>>>> pr/2
     '6.0': {
       version: '6.0',
       threadsPerWarp: 32,
@@ -197,6 +203,8 @@
       sharedMemoryAllocationUnitSize: 256,
       warpAllocationGranularity: 2,
       maxThreadBlockSize: 1024
+<<<<<<< HEAD
+=======
     },
     '6.1': {
       version: '6.1',
@@ -242,6 +250,7 @@
       sharedMemoryAllocationUnitSize: 256,
       warpAllocationGranularity: 4,
       maxThreadBlockSize: 1024
+>>>>>>> pr/2
     }
   };
 
