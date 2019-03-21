@@ -1,6 +1,6 @@
 # Online CUDA Occupancy Calculator
 
-Online here http://lxkarthi.github.io/cuda-calculator/
+Online here http://karthikeyann.github.io/cuda-calculator/
 
 Port of the [CUDA Occupancy Calculator spreadsheet](https://developer.download.nvidia.com/compute/cuda/CUDA_Occupancy_calculator.xls).
 
