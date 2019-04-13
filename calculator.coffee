@@ -272,6 +272,24 @@ mainConfig =
       maxThreadBlockSize: 1024
 
 
+    '7.5':
+      version: '7.5'
+      threadsPerWarp: 32
+      warpsPerMultiprocessor: 32
+      threadsPerMultiprocessor: 1024
+      threadBlocksPerMultiprocessor: 16
+      sharedMemoryPerMultiprocessor: 65536
+
+      registerFileSize: 65536
+      registerAllocationUnitSize: 256
+
+      allocationGranularity: 'warp'
+      maxRegistersPerThread: 255
+      sharedMemoryAllocationUnitSize: 256
+      warpAllocationGranularity: 2
+      maxThreadBlockSize: 1024
+
+
 
 gcd = (a,b) ->
     while (b != 0)
